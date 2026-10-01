@@ -44,6 +44,13 @@ type Project = {
   demo: string;
 };
 
+const API_BASE_URL = import.meta.env.DEV
+  ? (import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1").replace(
+      /\/$/,
+      "",
+    )
+  : "https://personal-portfolio-fym4.onrender.com/api/v1";
+
 const fallbackProjects: Project[] = [
   {
     title: "SachaBot — University Chatbot",
@@ -314,12 +321,9 @@ function PortfolioPage() {
   }, [selected]);
   useEffect(() => {
     const controller = new AbortController();
-    const apiUrl = (
-      import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1"
-    ).replace(/\/$/, "");
     const rows = <T,>(data: T[] | { results?: T[] }) =>
       Array.isArray(data) ? data : data.results || [];
-    void fetch(`${apiUrl}/projects/`, { signal: controller.signal })
+    void fetch(`${API_BASE_URL}/projects/`, { signal: controller.signal })
       .then(async (response) => {
         if (!response.ok) return;
         const data = (await response.json()) as
@@ -347,7 +351,7 @@ function PortfolioPage() {
           );
       })
       .catch(() => undefined);
-    void fetch(`${apiUrl}/profile/`, { signal: controller.signal })
+    void fetch(`${API_BASE_URL}/profile/`, { signal: controller.signal })
       .then(async (response) => {
         if (!response.ok) return;
         const data = (await response.json()) as
@@ -376,7 +380,7 @@ function PortfolioPage() {
         });
       })
       .catch(() => undefined);
-    void fetch(`${apiUrl}/skills/`, { signal: controller.signal })
+    void fetch(`${API_BASE_URL}/skills/`, { signal: controller.signal })
       .then(async (response) => {
         if (!response.ok) return;
         const data = (await response.json()) as
@@ -399,7 +403,7 @@ function PortfolioPage() {
       path: string,
       receive: (items: Record<string, unknown>[]) => void,
     ) => {
-      const response = await fetch(`${apiUrl}/${path}/`, {
+      const response = await fetch(`${API_BASE_URL}/${path}/`, {
         signal: controller.signal,
       });
       if (!response.ok) return;
@@ -435,7 +439,7 @@ function PortfolioPage() {
     const form = event.currentTarget;
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1"}/contact-messages/`,
+        `${API_BASE_URL}/contact-messages/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

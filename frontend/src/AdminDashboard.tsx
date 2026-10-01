@@ -49,9 +49,12 @@ type Field = {
   placeholder?: string;
 };
 
-const API = (
-  import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1"
-).replace(/\/$/, "");
+const API = import.meta.env.DEV
+  ? (import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1").replace(
+      /\/$/,
+      "",
+    )
+  : "https://personal-portfolio-fym4.onrender.com/api/v1";
 const resources: Record<Exclude<ViewName, "overview">, string> = {
   profile: "profile",
   projects: "projects",
