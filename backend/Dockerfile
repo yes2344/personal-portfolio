@@ -7,4 +7,4 @@ COPY . .
 RUN useradd --system --create-home --uid 10001 appuser && mkdir -p /app/staticfiles && chown -R appuser:appuser /app
 USER appuser
 EXPOSE 8000
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--access-logfile", "-"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py seed_portfolio && python manage.py collectstatic --noinput && exec gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers ${WEB_CONCURRENCY:-1} --access-logfile -"]
