@@ -49,7 +49,7 @@ const API_BASE_URL = import.meta.env.DEV
       /\/$/,
       "",
     )
-  : "/api/v1";
+  : "https://personal-portfolio-fym4.onrender.com/api/v1";
 
 const fallbackProjects: Project[] = [
   {

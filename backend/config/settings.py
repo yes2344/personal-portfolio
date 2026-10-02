@@ -75,7 +75,14 @@ STORAGES = {
     "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
 }
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS")
+CORS_ALLOWED_ORIGINS = list(
+    dict.fromkeys(
+        [
+            "https://personal-portfolio-phi-tan-19.vercel.app",
+            *env_list("CORS_ALLOWED_ORIGINS"),
+        ]
+    )
+)
 CORS_URLS_REGEX = r"^/api/.*$"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [

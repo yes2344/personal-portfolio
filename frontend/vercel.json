@@ -1,9 +1,5 @@
 {
   "rewrites": [
-    {
-      "source": "/api/v1/:path*",
-      "destination": "https://personal-portfolio-fym4.onrender.com/api/v1/:path*"
-    },
     { "source": "/dashboard", "destination": "/" },
     { "source": "/dashboard/:path*", "destination": "/" }
   ]

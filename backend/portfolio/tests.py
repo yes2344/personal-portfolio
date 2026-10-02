@@ -6,6 +6,17 @@ from .models import ContactMessage, Education, PortfolioProfile, Project, Skill
 
 
 class PublicPortfolioApiTests(APITestCase):
+    def test_vercel_site_is_allowed_by_cors(self):
+        response = self.client.get(
+            "/api/v1/profile/",
+            HTTP_ORIGIN="https://personal-portfolio-phi-tan-19.vercel.app",
+        )
+
+        self.assertEqual(
+            response["Access-Control-Allow-Origin"],
+            "https://personal-portfolio-phi-tan-19.vercel.app",
+        )
+
     def test_seed_command_creates_profile_projects_and_skills_idempotently(self):
         Project.objects.create(
             title="Legacy SachaBot",
