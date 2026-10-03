@@ -54,7 +54,7 @@ const API = import.meta.env.DEV
       /\/$/,
       "",
     )
-  : "https://personal-portfolio-fym4.onrender.com/api/v1";
+  : "/api/v1";
 const resources: Record<Exclude<ViewName, "overview">, string> = {
   profile: "profile",
   projects: "projects",

@@ -211,8 +211,8 @@ Contact form messages are still saved in the admin inbox without SMTP. To receiv
 
 1. In Vercel, choose **Add New → Project**, import the same GitHub repository, and select the free Hobby option if it is available for your account.
 2. Set **Root Directory** to `frontend`. Keep the detected Vite framework settings, with build command `npm run build` and output directory `dist`.
-3. Add the build environment variable `VITE_API_URL` with value `https://your-api-name.onrender.com/api/v1` (no trailing slash).
-4. Deploy and wait for the deployment to complete. The included `frontend/vercel.json` routes `/dashboard` to the React app.
+3. Do not add `VITE_API_URL` in Vercel. Production uses the same-origin `/api/v1` path, which `frontend/vercel.json` proxies to the Render API to avoid browser CORS errors. `VITE_API_URL` is only for local development.
+4. Deploy and wait for the deployment to complete. The included `frontend/vercel.json` proxies `/api/v1/*` to the backend and routes `/dashboard` to the React app.
 5. Open the Vercel URL, then visit `https://your-site-name.vercel.app/dashboard` and sign in with the superuser created on Render.
 
 ### 5. Personalize and verify the live site
